@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  
+  # build images from docker-file (golang)
+  golang_svc:
+    build: .
+    ports:
+      - 8000:8000
+    image: gotrial:latest
+    volumes:
+      - ./:/go/src/gotrial
+      #- gotrial-volume:/go/src/gotrial/storage/logs
+    hostname: "gotrial.server.local"
+    environment:
+      - APPENV=dev
+      - APPMODE=server
+      #- APPMODE=debug
+      - WORKERNAME=
+      - QUEUENAME=
+      - DBHOST=0.0.0.0
+      - DBNAME=try_echo
+      - DBUSER=root
+      - DBPASS=root
+      - ENCRYPT_KEY=
+
+# volumes:
+#   gotrial-volume:
+#     external: true
+
+networks: 
+  default:
+    external:
+      name: localnetwork
